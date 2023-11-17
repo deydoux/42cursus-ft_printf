@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:16:21 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/17 20:08:15 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/17 20:22:32 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ static int	update_flags(long long n, t_flags *flags)
 	return (len);
 }
 
-static void	ft_putll_precision(long long n, int precision)
+static void	print_ll(long long n, int precision)
 {
 	if (n == LLONG_MIN)
 	{
-		ft_putll_precision(n / 10, precision);
-		return (ft_putll_precision(n % 10 * -1, 0));
+		print_ll(n / 10, precision);
+		return (print_ll(n % 10 * -1, 0));
 	}
 	if (n < 0)
 	{
@@ -63,7 +63,7 @@ static void	ft_putll_precision(long long n, int precision)
 	while (precision-- > 0)
 		ft_putchar_fd('0', 1);
 	if (n >= 10)
-		ft_putll_precision(n / 10, 0);
+		print_ll(n / 10, 0);
 	ft_putchar_fd(n % 10 + '0', 1);
 }
 
@@ -80,7 +80,7 @@ int	print_int(t_flags flags, va_list *ap)
 	if (flags.positive_sign && n >= 0)
 		ft_putchar_fd(flags.positive_sign, 1);
 	if (flags.precision != 0 || n != 0)
-		ft_putll_precision(n, flags.precision);
+		print_ll(n, flags.precision);
 	if (flags.left_adjust)
 		while (flags.width-- > 0)
 			ft_putchar_fd(' ', 1);
