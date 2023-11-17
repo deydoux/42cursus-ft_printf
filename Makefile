@@ -1,6 +1,6 @@
 NAME=libftprintf.a
-SOURCES=convert_decimal.c	\
-		ft_printf.c			\
+SOURCES=print_int.c	\
+		ft_printf.c	\
 		get_flags.c
 
 OBJECTS=$(SOURCES:.c=.o)
