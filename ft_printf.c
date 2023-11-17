@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/17 20:07:05 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/17 23:50:53 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,11 @@ static int	convert(const char **format, va_list *ap)
 
 	}
 	else if (**format == 'u')
-	{
-
-	}
+		return (print_unsigned(flags, ap, "0123456789", ""));
 	else if (**format == 'x')
-	{
-
-	}
+		return (print_unsigned(flags, ap, "0123456789abcdef", "0x"));
 	else if (**format == 'X')
-	{
-
-	}
+		return (print_unsigned(flags, ap, "0123456789ABCDEF", "0X"));
 	else if (**format == 'c')
 	{
 

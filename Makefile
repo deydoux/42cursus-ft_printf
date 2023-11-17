@@ -1,6 +1,7 @@
 NAME=libftprintf.a
-SOURCES=print_int.c	\
-		ft_printf.c	\
+SOURCES=ft_printf.c			\
+		print_int.c			\
+		print_unsigned.c	\
 		get_flags.c
 
 OBJECTS=$(SOURCES:.c=.o)

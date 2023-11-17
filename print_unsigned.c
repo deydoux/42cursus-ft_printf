@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_int.c                                        :+:      :+:    :+:   */
+/*   print_unsigned.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 12:16:21 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/17 23:35:35 by deydoux          ###   ########.fr       */
+/*   Created: 2023/11/17 20:11:12 by deydoux           #+#    #+#             */
+/*   Updated: 2023/11/17 23:52:36 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,21 @@
 static long long	get_arg(t_flags flags, va_list *ap)
 {
 	if (flags.size == 0)
-		return (va_arg(*ap, int));
+		return (va_arg(*ap, unsigned));
 	if (flags.size == sizeof(signed char))
-		return ((signed char)va_arg(*ap, int));
+		return ((unsigned char)va_arg(*ap, int));
 	if (flags.size == sizeof(short))
-		return ((short)va_arg(*ap, int));
+		return ((unsigned short)va_arg(*ap, int));
 	if (flags.size == sizeof(long long))
-		return (va_arg(*ap, long long));
+		return (va_arg(*ap, unsigned long long));
 	if (flags.size == sizeof(long))
-		return (va_arg(*ap, long));
+		return (va_arg(*ap, unsigned long));
 	else
-		return (va_arg(*ap, int));
+		return (va_arg(*ap, unsigned));
 }
 
-static int	update_flags(t_flags *flags, long long n)
+static int	update_flags(t_flags *flags, unsigned long long n, size_t base_len,
+	char *prefix)
 {
 	int	len;
 
@@ -37,50 +38,43 @@ static int	update_flags(t_flags *flags, long long n)
 	len = n == 0 && flags->precision != 0;
 	while (n)
 	{
-		n /= 10;
+		n /= base_len;
 		len++;
 	}
 	flags->precision -= len;
 	len += (flags->precision * (flags->precision > 0))
-		+ (flags->positive_sign && n >= 0);
+		+ (flags->alternate_form * ft_strlen(prefix));
 	flags->width -= len;
 	len += flags->width * (flags->width > 0);
 	return (len);
 }
 
-static void	print_ll(long long n, int precision)
+static void	print_ull(unsigned long long n, int precision, char *base,
+	size_t base_len)
 {
-	if (n == LLONG_MIN)
-	{
-		print_ll(n / 10, precision);
-		return (print_ll(n % 10 * -1, 0));
-	}
-	if (n < 0)
-	{
-		ft_putchar_fd('-', 1);
-		n *= -1;
-	}
 	while (precision-- > 0)
 		ft_putchar_fd('0', 1);
-	if (n >= 10)
-		print_ll(n / 10, 0);
-	ft_putchar_fd(n % 10 + '0', 1);
+	if (n >= base_len)
+		print_ull(n / base_len, 0, base, base_len);
+	ft_putchar_fd(base[n % base_len], 1);
 }
 
-int	print_int(t_flags flags, va_list *ap)
+int	print_unsigned(t_flags flags, va_list *ap, char *base, char *prefix)
 {
-	long long	n;
-	int			len;
+	unsigned long long	n;
+	size_t				base_len;
+	int					len;
 
 	n = get_arg(flags, ap);
-	len = update_flags(&flags, n);
+	base_len = ft_strlen(base);
+	len = update_flags(&flags, n, base_len, prefix);
 	if (!flags.left_adjust)
 		while (flags.width-- > 0)
 			ft_putchar_fd(flags.padding, 1);
-	if (flags.positive_sign && n >= 0)
-		ft_putchar_fd(flags.positive_sign, 1);
+	if (flags.alternate_form)
+		ft_putstr_fd(prefix, 1);
 	if (flags.precision != 0 || n != 0)
-		print_ll(n, flags.precision);
+		print_ull(n, flags.precision, base, base_len);
 	if (flags.left_adjust)
 		while (flags.width-- > 0)
 			ft_putchar_fd(' ', 1);
