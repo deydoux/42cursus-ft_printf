@@ -20,7 +20,7 @@ static t_flags	parse_flags(const char **format)
 	flags.padding = ' ';
 	flags.left_adjust = 0;
 	flags.positive_sign = 0;
-	while (*++*format)
+	while (**format)
 	{
 		if (**format == '#')
 			flags.alternate_form = 1;
@@ -34,6 +34,7 @@ static t_flags	parse_flags(const char **format)
 			flags.positive_sign = '+';
 		else
 			return (flags);
+		(*format)++;
 	}
 	return (flags);
 }

@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:16:21 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/17 09:18:23 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/17 18:48:45 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,42 @@ static long long	get_arg(t_flags flags, va_list *ap)
 		return (va_arg(*ap, int));
 }
 
-static int	ll_len(long long n, t_flags flags)
+static int	update_flags(long long n, t_flags *flags)
 {
 	int	len;
 
-	len = (n == 0 && flags.precision != 0)
-		+ (n <= 0 && flags.positive_sign);
+	if (flags->precision != -1)
+		flags->padding = ' ';
+	len = n == 0 && flags->precision != 0;
 	while (n)
 	{
 		n /= 10;
 		len++;
 	}
+	flags->precision -= len;
+	len += (flags->precision * (flags->precision > 0))
+		+ (flags->positive_sign && n >= 0);
+	flags->width -= len;
+	len += flags->width * (flags->width > 0);
 	return (len);
 }
 
-static void	ft_putll(long long n)
+static void	ft_putll(long long n, int precision)
 {
 	if (n == LLONG_MIN)
 	{
-		ft_putll(n / 10);
-		return (ft_putll(n % 10 * -1));
+		ft_putll(n / 10, precision);
+		return (ft_putll(n % 10 * -1, 0));
 	}
 	if (n < 0)
 	{
 		ft_putchar_fd('-', 1);
 		n *= -1;
 	}
+	while (precision-- > 0)
+		ft_putchar_fd('0', 1);
 	if (n >= 10)
-		ft_putll(n / 10);
+		ft_putll(n / 10, 0);
 	ft_putchar_fd(n % 10 + '0', 1);
 }
 
@@ -65,20 +73,16 @@ int	convert_decimal(t_flags flags, va_list *ap)
 	int			len;
 
 	n = get_arg(flags, ap);
-	len = ll_len(n, flags);
-	flags.width -= flags.precision * (flags.precision > 0);
-	if (flags.precision + 1)
-		flags.padding = ' ';
-	while (len <= flags.width)
-		ft_putchar_fd(flags.padding, 1);
-	if (n >= 0 && flags.positive_sign)
+	len = update_flags(n, &flags);
+	if (!flags.left_adjust)
+		while (flags.width-- > 0)
+			ft_putchar_fd(flags.padding, 1);
+	if (flags.positive_sign && n >= 0)
 		ft_putchar_fd(flags.positive_sign, 1);
-	while (len <= flags.precision)
-	{
-		ft_putchar_fd('0', 1);
-		len++;
-	}
-	if (n == 0 && flags.precision != 0)
-		ft_putll(n);
+	if (flags.precision != 0 || n != 0)
+		ft_putll(n, flags.precision);
+	if (flags.left_adjust)
+		while (flags.width-- > 0)
+			ft_putchar_fd(' ', 1);
 	return (len);
 }

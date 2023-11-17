@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/17 09:24:34 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/17 14:02:48 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ int	ft_printf(const char *format, ...)
 	while (*format)
 	{
 		if (*format == '%')
+		{
 			len += convert(&format, &ap);
+			format++;
+		}
 		else
 		{
 			ft_putchar_fd(*format++, 1);

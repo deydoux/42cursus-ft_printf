@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:20 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/17 09:11:48 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/17 18:27:34 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef struct s_flags
 	size_t	size;
 }			t_flags;
 
-t_flags	get_flags(const char **format, va_list *ap);
-int		convert_decimal(t_flags flags, va_list *ap);
+int			ft_printf(const char *format, ...);
+t_flags		get_flags(const char **format, va_list *ap);
+int			convert_decimal(t_flags flags, va_list *ap);
 
 #endif

@@ -1,5 +1,7 @@
 NAME=libftprintf.a
-SOURCES=ft_printf.c
+SOURCES=convert_decimal.c	\
+		ft_printf.c			\
+		get_flags.c
 
 OBJECTS=$(SOURCES:.c=.o)
 DEPENDENCIES=$(SOURCES:.c=.d)
