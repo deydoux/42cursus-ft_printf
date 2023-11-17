@@ -1,3 +1,5 @@
 *.d
 *.o
 libftprintf.a
+*test.c
+a.out
