@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:16:21 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/18 17:35:49 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/18 17:51:21 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ static int	update_flags(t_flags *flags, long long n)
 	return (len);
 }
 
+static void	put_sign(long long n, char positive_sign)
+{
+	if (n < 0)
+		ft_putchar_fd('-', 1);
+	else if (positive_sign)
+		ft_putchar_fd(positive_sign, 1);
+}
+
 static void	print_ll(long long n, int precision)
 {
 	if (n == LLONG_MIN)
@@ -73,13 +81,13 @@ int	print_decimal(t_flags flags, va_list *ap)
 
 	n = get_arg(flags, ap);
 	len = update_flags(&flags, n);
+	if (flags.padding == '0')
+		put_sign(n, flags.positive_sign);
 	if (!flags.left_adjust)
 		while (flags.width-- > 0)
 			ft_putchar_fd(flags.padding, 1);
-	if (n < 0)
-		ft_putchar_fd('-', 1);
-	else if (flags.positive_sign)
-		ft_putchar_fd(flags.positive_sign, 1);
+	if (flags.padding != '0')
+		put_sign(n, flags.positive_sign);
 	if (flags.precision != 0 || n != 0)
 		print_ll(n, flags.precision);
 	if (flags.left_adjust)
