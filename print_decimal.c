@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_decimal.c                                        :+:      :+:    :+:   */
+/*   print_decimal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:16:21 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/17 23:35:35 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/18 17:35:49 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ static void	print_ll(long long n, int precision)
 		return (print_ll(n % 10 * -1, 0));
 	}
 	if (n < 0)
-	{
-		ft_putchar_fd('-', 1);
 		n *= -1;
-	}
 	while (precision-- > 0)
 		ft_putchar_fd('0', 1);
 	if (n >= 10)
@@ -79,7 +76,9 @@ int	print_decimal(t_flags flags, va_list *ap)
 	if (!flags.left_adjust)
 		while (flags.width-- > 0)
 			ft_putchar_fd(flags.padding, 1);
-	if (flags.positive_sign && n >= 0)
+	if (n < 0)
+		ft_putchar_fd('-', 1);
+	else if (flags.positive_sign)
 		ft_putchar_fd(flags.positive_sign, 1);
 	if (flags.precision != 0 || n != 0)
 		print_ll(n, flags.precision);
