@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:56:36 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/18 16:20:05 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/18 16:56:07 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	print_str(t_flags flags, va_list *ap)
 	int			len;
 
 	s = va_arg(*ap, const char *);
+	if (!s)
+		s = "(null)";
 	len = update_flags(&flags, s);
 	if (!flags.left_adjust)
 		while (flags.width-- > 0)
