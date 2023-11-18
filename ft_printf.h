@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:20 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/18 16:08:19 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/18 16:12:48 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int		print_decimal(t_flags flags, va_list *ap);
 int		print_unsigned(t_flags flags, va_list *ap, char *base, char *prefix);
 int		print_char(t_flags flags, va_list *ap);
 int		print_str(t_flags flags, va_list *ap);
+int		print_ptr(t_flags flags, va_list *ap);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/18 16:08:36 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/18 16:13:22 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ static int	convert(const char **format, va_list *ap)
 	else if (**format == 's')
 		return (print_str(flags, ap));
 	else if (**format == 'p')
-	{
-
-	}
+		print_ptr(flags, ap);
 	else if (**format != '%')
 		*format = percent_ptr;
 	ft_putchar_fd('%', 1);

@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:11:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/17 23:52:36 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/18 16:12:29 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,11 @@ int	print_unsigned(t_flags flags, va_list *ap, char *base, char *prefix)
 		while (flags.width-- > 0)
 			ft_putchar_fd(' ', 1);
 	return (len);
+}
+
+int	print_ptr(t_flags flags, va_list *ap)
+{
+	flags.alternate_form = 1;
+	flags.size = sizeof(long);
+	return (print_unsigned(flags, ap, "0123456789", "0x"));
 }
