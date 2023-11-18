@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_int.c                                        :+:      :+:    :+:   */
+/*   print_decimal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -67,7 +67,7 @@ static void	print_ll(long long n, int precision)
 	ft_putchar_fd(n % 10 + '0', 1);
 }
 
-int	print_int(t_flags flags, va_list *ap)
+int	print_decimal(t_flags flags, va_list *ap)
 {
 	long long	n;
 	int			len;
