@@ -30,19 +30,21 @@ static long long	get_arg(t_flags flags, va_list *ap)
 
 static int	update_flags(t_flags *flags, long long n)
 {
-	int	len;
+	int			len;
+	long long	tmp_n;
 
 	if (flags->precision != -1)
 		flags->padding = ' ';
-	len = n == 0 && flags->precision != 0;
-	while (n)
+	len = (n == 0 && flags->precision != 0);
+	tmp_n = n;
+	while (tmp_n)
 	{
-		n /= 10;
+		tmp_n /= 10;
 		len++;
 	}
 	flags->precision -= len;
 	len += (flags->precision * (flags->precision > 0))
-		+ (flags->positive_sign && n >= 0);
+		+ (n < 0 || flags->positive_sign);
 	flags->width -= len;
 	len += flags->width * (flags->width > 0);
 	return (len);
