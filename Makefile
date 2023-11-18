@@ -1,5 +1,6 @@
 NAME=libftprintf.a
 SOURCES=ft_printf.c			\
+		print_char.c		\
 		print_decimal.c		\
 		print_unsigned.c	\
 		get_flags.c

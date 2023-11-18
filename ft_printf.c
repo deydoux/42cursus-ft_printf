@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/18 10:13:29 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/18 15:50:20 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	convert(const char **format, va_list *ap)
 	const char	*percent_ptr;
 	t_flags		flags;
 
-	percent_ptr = ++(*format);
+	percent_ptr = (*format)++;
 	flags = get_flags(format, ap);
 	if (**format == 'd' || **format == 'i')
 		return (print_decimal(flags, ap));
@@ -28,9 +28,7 @@ static int	convert(const char **format, va_list *ap)
 	else if (**format == 'X')
 		return (print_unsigned(flags, ap, "0123456789ABCDEF", "0X"));
 	else if (**format == 'c')
-	{
-
-	}
+		return (print_char(flags, ap));
 	else if (**format == 's')
 	{
 
@@ -39,12 +37,9 @@ static int	convert(const char **format, va_list *ap)
 	{
 
 	}
-	else if (**format == '%')
-	{
-
-	}
+	else if (**format != '%')
+		*format = percent_ptr;
 	ft_putchar_fd('%', 1);
-	*format = percent_ptr;
 	return (1);
 }
 
