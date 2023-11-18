@@ -16,6 +16,7 @@ ARFLAGS=-c -r -s
 RM=rm -f
 
 all: $(NAME)
+bonus: all
 
 -include $(DEPENDENCIES)
 
@@ -38,4 +39,4 @@ fclean:
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re
