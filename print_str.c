@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:56:36 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/18 16:07:38 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/18 16:20:05 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	update_flags(t_flags *flags, const char *s)
 	int	len;
 
 	len = 0;
-	while (s[len] && (flags->precision > 0 || len < flags->precision))
+	while (s[len] && (flags->precision < 0 || len < flags->precision))
 		len++;
 	flags->precision = len;
 	flags->width -= len;
