@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_decimal.c                                    :+:      :+:    :+:   */
+/*   print_signed.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:16:21 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 06:54:49 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 06:55:21 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	print_ll(long long n, int precision)
 	ft_putchar_fd(n % 10 + '0', 1);
 }
 
-int	print_decimal(t_flags flags, va_list *ap)
+int	print_signed(t_flags flags, va_list *ap)
 {
 	long long	n;
 	int			len;
