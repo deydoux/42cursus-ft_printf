@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:16:21 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 06:36:43 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 06:47:30 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	update_flags(t_flags *flags, long long n)
 
 	if (flags->precision != -1)
 		flags->padding = ' ';
-	len = (n == 0 && flags->precision != 0 && flags->precision != 1);
+	len = n == 0 && flags->precision != 0 && flags->precision != 1;
 	tmp_n = n;
 	while (tmp_n)
 	{
