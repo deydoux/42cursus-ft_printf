@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 06:55:46 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 08:16:30 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ static int	convert(const char **format, va_list *ap)
 	percent_ptr = (*format)++;
 	flags = get_flags(format, ap);
 	if (**format == 'd' || **format == 'i')
-		return (print_signed(flags, ap));
+		return (print_signed(ap, flags));
 	else if (**format == 'u')
-		return (print_unsigned(flags, ap, "0123456789", ""));
+		return (print_unsigned(ap, flags, "0123456789", ""));
 	else if (**format == 'x')
-		return (print_unsigned(flags, ap, "0123456789abcdef", "0x"));
+		return (print_unsigned(ap, flags, "0123456789abcdef", "0x"));
 	else if (**format == 'X')
-		return (print_unsigned(flags, ap, "0123456789ABCDEF", "0X"));
+		return (print_unsigned(ap, flags, "0123456789ABCDEF", "0X"));
 	else if (**format == 'c')
-		return (print_char(flags, ap));
+		return (print_char(ap, flags));
 	else if (**format == 's')
-		return (print_str(flags, ap));
+		return (print_str(ap, flags));
 	else if (**format == 'p')
-		return (print_ptr(flags, ap));
+		return (print_ptr(ap, flags));
 	else if (**format != '%')
 		*format = percent_ptr;
 	ft_putchar_fd('%', 1);

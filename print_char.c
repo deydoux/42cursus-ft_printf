@@ -6,13 +6,13 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:38:06 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/18 15:55:25 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 08:16:47 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	print_char(t_flags flags, va_list *ap)
+int	print_char(va_list *ap, t_flags flags)
 {
 	int	len;
 

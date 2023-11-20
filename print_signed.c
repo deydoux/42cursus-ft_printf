@@ -6,15 +6,15 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:16:21 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 06:55:21 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 08:13:06 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static long long	get_arg(t_flags flags, va_list *ap)
+static long long	get_arg(va_list *ap, t_flags flags)
 {
-	if (flags.size == 0)
+	if (!flags.size)
 		return (va_arg(*ap, int));
 	if (flags.size == sizeof(signed char))
 		return ((signed char)va_arg(*ap, int));
@@ -35,7 +35,7 @@ static int	update_flags(t_flags *flags, long long n)
 
 	if (flags->precision != -1)
 		flags->padding = ' ';
-	len = n == 0 && flags->precision != 0 && flags->precision != 1;
+	len = !n && flags->precision && flags->precision != 1;
 	tmp_n = n;
 	while (tmp_n)
 	{
@@ -74,12 +74,12 @@ static void	print_ll(long long n, int precision)
 	ft_putchar_fd(n % 10 + '0', 1);
 }
 
-int	print_signed(t_flags flags, va_list *ap)
+int	print_signed(va_list *ap, t_flags flags)
 {
 	long long	n;
 	int			len;
 
-	n = get_arg(flags, ap);
+	n = get_arg(ap, flags);
 	len = update_flags(&flags, n);
 	if (flags.padding == '0')
 		put_sign(n, flags.positive_sign);
@@ -88,9 +88,9 @@ int	print_signed(t_flags flags, va_list *ap)
 			ft_putchar_fd(flags.padding, 1);
 	if (flags.padding != '0')
 		put_sign(n, flags.positive_sign);
-	if (n == 0 && flags.precision == 1)
+	if (flags.precision == 1 && !n)
 		ft_putchar_fd('0', 1);
-	else if (n != 0 || flags.precision != 0)
+	else if (n || flags.precision)
 		print_ll(n, flags.precision);
 	if (flags.left_adjust)
 		while (flags.width-- > 0)

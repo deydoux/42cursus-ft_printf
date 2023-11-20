@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:20 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 06:55:48 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 08:18:21 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ typedef struct s_flags
 
 int		ft_printf(const char *format, ...);
 t_flags	get_flags(const char **format, va_list *ap);
-int		print_signed(t_flags flags, va_list *ap);
-int		print_unsigned(t_flags flags, va_list *ap, char *base, char *prefix);
-int		print_char(t_flags flags, va_list *ap);
-int		print_str(t_flags flags, va_list *ap);
-int		print_ptr(t_flags flags, va_list *ap);
+int		print_signed(va_list *ap, t_flags flags);
+int		print_unsigned(va_list *ap, t_flags flags, char *base, char *prefix);
+int		print_char(va_list *ap, t_flags flags);
+int		print_str(va_list *ap, t_flags flags);
+int		print_ptr(va_list *ap, t_flags flags);
 
 #endif

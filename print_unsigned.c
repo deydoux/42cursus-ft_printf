@@ -6,15 +6,15 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:11:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 07:24:11 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 08:18:07 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static long long	get_arg(t_flags flags, va_list *ap)
+static long long	get_arg(va_list *ap, t_flags flags)
 {
-	if (flags.size == 0)
+	if (!flags.size)
 		return (va_arg(*ap, unsigned));
 	if (flags.size == sizeof(signed char))
 		return ((unsigned char)va_arg(*ap, int));
@@ -36,7 +36,7 @@ static int	update_flags(t_flags *flags, unsigned long long n, size_t base_len,
 
 	if (flags->precision != -1)
 		flags->padding = ' ';
-	len = n == 0 && flags->precision != 0 && flags->precision != 1;
+	len = !n && flags->precision && flags->precision != 1;
 	tmp_n = n;
 	while (tmp_n)
 	{
@@ -45,7 +45,7 @@ static int	update_flags(t_flags *flags, unsigned long long n, size_t base_len,
 	}
 	flags->precision -= len;
 	len += (flags->precision * (flags->precision > 0))
-		+ ((n != 0 && flags->alternate_form) * ft_strlen(prefix));
+		+ ((n && flags->alternate_form) * ft_strlen(prefix));
 	flags->width -= len;
 	len += flags->width * (flags->width > 0);
 	return (len);
@@ -61,23 +61,23 @@ static void	print_ull(unsigned long long n, int precision, char *base,
 	ft_putchar_fd(base[n % base_len], 1);
 }
 
-int	print_unsigned(t_flags flags, va_list *ap, char *base, char *prefix)
+int	print_unsigned(va_list *ap, t_flags flags, char *base, char *prefix)
 {
 	unsigned long long	n;
 	size_t				base_len;
 	int					len;
 
-	n = get_arg(flags, ap);
+	n = get_arg(ap, flags);
 	base_len = ft_strlen(base);
 	len = update_flags(&flags, n, base_len, prefix);
 	if (!flags.left_adjust)
 		while (flags.width-- > 0)
 			ft_putchar_fd(flags.padding, 1);
-	if (n != 0 && flags.alternate_form)
+	if (flags.alternate_form && n)
 		ft_putstr_fd(prefix, 1);
-	if (n == 0 && flags.precision == 1)
+	if (flags.precision == 1 && !n)
 		ft_putchar_fd('0', 1);
-	else if (n != 0 || flags.precision != 0)
+	else if (n || flags.precision)
 		print_ull(n, flags.precision, base, base_len);
 	if (flags.left_adjust)
 		while (flags.width-- > 0)
@@ -85,9 +85,9 @@ int	print_unsigned(t_flags flags, va_list *ap, char *base, char *prefix)
 	return (len);
 }
 
-int	print_ptr(t_flags flags, va_list *ap)
+int	print_ptr(va_list *ap, t_flags flags)
 {
 	flags.alternate_form = 1;
 	flags.size = sizeof(long);
-	return (print_unsigned(flags, ap, "0123456789abcdef", "0x"));
+	return (print_unsigned(ap, flags, "0123456789abcdef", "0x"));
 }

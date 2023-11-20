@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:56:36 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/18 16:56:07 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 08:17:20 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	update_flags(t_flags *flags, const char *s)
 	return (len);
 }
 
-int	print_str(t_flags flags, va_list *ap)
+int	print_str(va_list *ap, t_flags flags)
 {
 	const char	*s;
 	int			len;
