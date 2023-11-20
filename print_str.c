@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:56:36 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 12:30:11 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 13:30:07 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	put_null(t_flags flags)
 {
 	int	len;
 
-	len = 6 * (flags.precision == -1);
+	len = 6 * (flags.precision == -1 || flags.precision >= 6);
 	flags.width -= len;
 	if (!flags.left_adjust)
 	{
@@ -39,7 +39,7 @@ static int	put_null(t_flags flags)
 			len++;
 		}
 	}
-	if (flags.precision == -1)
+	if (flags.precision == -1 || flags.precision >= 6)
 		write(1, "(null)", 6);
 	while (flags.width-- > 0)
 	{
