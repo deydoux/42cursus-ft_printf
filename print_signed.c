@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:16:21 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 12:29:10 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 14:03:16 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,15 @@ static int	update_flags(t_flags *flags, long long n)
 
 	if (flags->precision != -1)
 		flags->padding = ' ';
-	len = !n && flags->precision && flags->precision != 1;
+	len = !n && flags->precision == -1;
 	tmp_n = n;
 	while (tmp_n)
 	{
 		tmp_n /= 10;
 		len++;
 	}
-	flags->precision -= len;
+	if (n)
+		flags->precision -= len;
 	len += (flags->precision * (flags->precision > 0))
 		+ (n < 0 || flags->positive_sign);
 	flags->width -= len;
@@ -88,9 +89,10 @@ int	print_signed(va_list *ap, t_flags flags)
 			ft_putchar_fd(flags.padding, 1);
 	if (flags.padding != '0')
 		put_sign(n, flags.positive_sign);
-	if (flags.precision == 1 && !n)
-		ft_putchar_fd('0', 1);
-	else if (n || flags.precision)
+	if (flags.precision != -1 && !n)
+		while (flags.precision-- > 0)
+			ft_putchar_fd('0', 1);
+	else
 		print_ll(n, flags.precision);
 	while (flags.width-- > 0)
 		ft_putchar_fd(' ', 1);
