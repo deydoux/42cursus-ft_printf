@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 10:55:40 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 11:30:18 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 12:25:30 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	put_nil(t_flags flags)
 			len++;
 		}
 	}
-	ft_putstr_fd("(nil)", 1);
+	write(1, "(nil)", 5);
 	return (len);
 }
