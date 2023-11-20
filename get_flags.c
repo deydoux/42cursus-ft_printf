@@ -98,5 +98,6 @@ t_flags	get_flags(const char **format, va_list *ap)
 	flags.width = parse_width(format, ap);
 	flags.precision = parse_precision(format, ap);
 	flags.size = parse_size(format);
+	flags.ptr = 0;
 	return (flags);
 }

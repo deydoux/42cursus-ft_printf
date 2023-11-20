@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:20 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 08:18:21 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 11:07:42 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_flags
 	int		width;
 	int		precision;
 	size_t	size;
+	int		ptr;
 }			t_flags;
 
 int		ft_printf(const char *format, ...);
@@ -34,5 +35,6 @@ int		print_unsigned(va_list *ap, t_flags flags, char *base, char *prefix);
 int		print_char(va_list *ap, t_flags flags);
 int		print_str(va_list *ap, t_flags flags);
 int		print_ptr(va_list *ap, t_flags flags);
+int		put_nil(t_flags flags);
 
 #endif

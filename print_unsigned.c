@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:11:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 08:18:07 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 11:14:08 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	print_unsigned(va_list *ap, t_flags flags, char *base, char *prefix)
 	int					len;
 
 	n = get_arg(ap, flags);
+	if (flags.ptr && !n)
+		return (put_nil(flags));
 	base_len = ft_strlen(base);
 	len = update_flags(&flags, n, base_len, prefix);
 	if (!flags.left_adjust)
@@ -83,11 +85,4 @@ int	print_unsigned(va_list *ap, t_flags flags, char *base, char *prefix)
 		while (flags.width-- > 0)
 			ft_putchar_fd(' ', 1);
 	return (len);
-}
-
-int	print_ptr(va_list *ap, t_flags flags)
-{
-	flags.alternate_form = 1;
-	flags.size = sizeof(long);
-	return (print_unsigned(ap, flags, "0123456789abcdef", "0x"));
 }

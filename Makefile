@@ -1,6 +1,7 @@
 NAME=libftprintf.a
 SOURCES=ft_printf.c			\
 		print_char.c		\
+		print_ptr.c			\
 		print_signed.c		\
 		print_str.c			\
 		print_unsigned.c	\
