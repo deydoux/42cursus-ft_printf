@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:11:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 06:51:47 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 07:24:11 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,21 @@ static long long	get_arg(t_flags flags, va_list *ap)
 static int	update_flags(t_flags *flags, unsigned long long n, size_t base_len,
 	char *prefix)
 {
-	int	len;
+	int					len;
+	unsigned long long	tmp_n;
 
 	if (flags->precision != -1)
 		flags->padding = ' ';
 	len = n == 0 && flags->precision != 0 && flags->precision != 1;
-	while (n)
+	tmp_n = n;
+	while (tmp_n)
 	{
-		n /= base_len;
+		tmp_n /= base_len;
 		len++;
 	}
 	flags->precision -= len;
 	len += (flags->precision * (flags->precision > 0))
-		+ (flags->alternate_form * ft_strlen(prefix));
+		+ ((n != 0 && flags->alternate_form) * ft_strlen(prefix));
 	flags->width -= len;
 	len += flags->width * (flags->width > 0);
 	return (len);
@@ -71,7 +73,7 @@ int	print_unsigned(t_flags flags, va_list *ap, char *base, char *prefix)
 	if (!flags.left_adjust)
 		while (flags.width-- > 0)
 			ft_putchar_fd(flags.padding, 1);
-	if (flags.alternate_form)
+	if (n != 0 && flags.alternate_form)
 		ft_putstr_fd(prefix, 1);
 	if (n == 0 && flags.precision == 1)
 		ft_putchar_fd('0', 1);
