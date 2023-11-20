@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:11:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/18 16:57:23 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 06:51:47 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	update_flags(t_flags *flags, unsigned long long n, size_t base_len,
 
 	if (flags->precision != -1)
 		flags->padding = ' ';
-	len = n == 0 && flags->precision != 0;
+	len = n == 0 && flags->precision != 0 && flags->precision != 1;
 	while (n)
 	{
 		n /= base_len;
@@ -73,7 +73,9 @@ int	print_unsigned(t_flags flags, va_list *ap, char *base, char *prefix)
 			ft_putchar_fd(flags.padding, 1);
 	if (flags.alternate_form)
 		ft_putstr_fd(prefix, 1);
-	if (flags.precision != 0 || n != 0)
+	if (n == 0 && flags.precision == 1)
+		ft_putchar_fd('0', 1);
+	else if (n != 0 || flags.precision != 0)
 		print_ull(n, flags.precision, base, base_len);
 	if (flags.left_adjust)
 		while (flags.width-- > 0)
