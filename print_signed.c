@@ -6,23 +6,23 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:16:21 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 08:13:06 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 11:34:13 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static long long	get_arg(va_list *ap, t_flags flags)
+static long long	get_arg(va_list *ap, size_t size)
 {
-	if (!flags.size)
+	if (!size)
 		return (va_arg(*ap, int));
-	if (flags.size == sizeof(signed char))
+	if (size == sizeof(signed char))
 		return ((signed char)va_arg(*ap, int));
-	if (flags.size == sizeof(short))
+	if (size == sizeof(short))
 		return ((short)va_arg(*ap, int));
-	if (flags.size == sizeof(long long))
+	if (size == sizeof(long long))
 		return (va_arg(*ap, long long));
-	if (flags.size == sizeof(long))
+	if (size == sizeof(long))
 		return (va_arg(*ap, long));
 	else
 		return (va_arg(*ap, int));
@@ -79,7 +79,7 @@ int	print_signed(va_list *ap, t_flags flags)
 	long long	n;
 	int			len;
 
-	n = get_arg(ap, flags);
+	n = get_arg(ap, flags.size);
 	len = update_flags(&flags, n);
 	if (flags.padding == '0')
 		put_sign(n, flags.positive_sign);

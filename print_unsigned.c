@@ -6,23 +6,23 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:11:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 11:14:08 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/20 11:33:19 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static long long	get_arg(va_list *ap, t_flags flags)
+static long long	get_arg(va_list *ap, size_t size)
 {
-	if (!flags.size)
+	if (!size)
 		return (va_arg(*ap, unsigned));
-	if (flags.size == sizeof(signed char))
+	if (size == sizeof(signed char))
 		return ((unsigned char)va_arg(*ap, int));
-	if (flags.size == sizeof(short))
+	if (size == sizeof(short))
 		return ((unsigned short)va_arg(*ap, int));
-	if (flags.size == sizeof(long long))
+	if (size == sizeof(long long))
 		return (va_arg(*ap, unsigned long long));
-	if (flags.size == sizeof(long))
+	if (size == sizeof(long))
 		return (va_arg(*ap, unsigned long));
 	else
 		return (va_arg(*ap, unsigned));
@@ -67,7 +67,7 @@ int	print_unsigned(va_list *ap, t_flags flags, char *base, char *prefix)
 	size_t				base_len;
 	int					len;
 
-	n = get_arg(ap, flags);
+	n = get_arg(ap, flags.size);
 	if (flags.ptr && !n)
 		return (put_nil(flags));
 	base_len = ft_strlen(base);
