@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:11:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/21 10:06:56 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/21 10:23:19 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static long long	get_arg(va_list *ap, size_t size)
 		return (va_arg(*ap, unsigned));
 }
 
-static int	update_flags(t_flags *flags, unsigned long long n, size_t base_len,
-	char *prefix)
+static int	update_flags(t_flags *flags, unsigned long long n, size_t base_len)
 {
 	int					len;
 	unsigned long long	tmp_n;
@@ -46,7 +45,7 @@ static int	update_flags(t_flags *flags, unsigned long long n, size_t base_len,
 	if (n)
 		flags->precision -= len;
 	len += (flags->precision * (flags->precision > 0))
-		+ ((n && flags->alternate_form) * ft_strlen(prefix));
+		+ ((n && flags->alternate_form) * 2);
 	flags->width -= len;
 	len += flags->width * (flags->width > 0);
 	return (len);
@@ -72,7 +71,7 @@ int	print_unsigned(va_list *ap, t_flags flags, char *base, char *prefix)
 	if (flags.ptr && !n)
 		return (put_nil(flags));
 	base_len = ft_strlen(base);
-	len = update_flags(&flags, n, base_len, prefix);
+	len = update_flags(&flags, n, base_len);
 	if (!flags.left_adjust)
 		while (flags.width-- > 0)
 			ft_stdout_char(flags.padding, flags.error);
