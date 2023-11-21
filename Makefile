@@ -17,6 +17,8 @@ ARFLAGS=-c -r -s
 RM=rm -f
 
 all: $(NAME)
+	@$(MAKE) --no-print-directory -C Libft
+
 bonus: all
 
 -include $(DEPENDENCIES)
@@ -25,8 +27,7 @@ bonus: all
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(NAME): $(OBJECTS)
-	@$(MAKE) -C Libft
-	cp Libft/libft.a $@
+	cp Libft/libft.a $(NAME)
 	$(AR) $(ARFLAGS) $@ $^
 
 clean:
