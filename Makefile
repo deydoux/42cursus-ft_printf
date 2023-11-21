@@ -27,7 +27,7 @@ bonus: all
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(NAME): $(OBJECTS)
-	cp Libft/libft.a $(NAME)
+	cp Libft/libft.a $@
 	$(AR) $(ARFLAGS) $@ $^
 
 clean:
