@@ -6,13 +6,13 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:20 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/21 09:56:38 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/21 13:32:02 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# include "Libft/libft.h"
+# include "../libft.h"
 # include <stdarg.h>
 # include <limits.h>
 
@@ -29,7 +29,6 @@ typedef struct s_flags
 	int		*error;
 }			t_flags;
 
-int		ft_printf(const char *format, ...);
 void	ft_stdout(const void *buf, size_t nbyte, int *error);
 void	ft_stdout_char(char c, int *error);
 t_flags	get_flags(const char **format, va_list *ap, int *error);
