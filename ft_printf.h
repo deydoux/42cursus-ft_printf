@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:20 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 11:07:42 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/21 09:56:38 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ typedef struct s_flags
 	int		precision;
 	size_t	size;
 	int		ptr;
+	int		*error;
 }			t_flags;
 
 int		ft_printf(const char *format, ...);
-t_flags	get_flags(const char **format, va_list *ap);
+void	ft_stdout(const void *buf, size_t nbyte, int *error);
+void	ft_stdout_char(char c, int *error);
+t_flags	get_flags(const char **format, va_list *ap, int *error);
 int		print_signed(va_list *ap, t_flags flags);
 int		print_unsigned(va_list *ap, t_flags flags, char *base, char *prefix);
 int		print_char(va_list *ap, t_flags flags);

@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:16:21 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 14:03:16 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/21 10:02:42 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,29 @@ static int	update_flags(t_flags *flags, long long n)
 	return (len);
 }
 
-static void	put_sign(long long n, char positive_sign)
+static void	put_sign(long long n, t_flags flags)
 {
 	if (n < 0)
-		ft_putchar_fd('-', 1);
-	else if (positive_sign)
-		ft_putchar_fd(positive_sign, 1);
+		ft_stdout_char('-', flags.error);
+	else if (flags.positive_sign)
+		ft_stdout_char(flags.positive_sign, flags.error);
 }
 
-static void	print_ll(long long n, int precision)
+static void	print_ll(long long n, t_flags flags)
 {
 	if (n == LLONG_MIN)
 	{
-		print_ll(n / 10, precision);
-		return (print_ll(n % 10 * -1, 0));
+		print_ll(n / 10, flags);
+		flags.precision = 0;
+		return (print_ll(n % 10 * -1, flags));
 	}
 	if (n < 0)
 		n *= -1;
-	while (precision-- > 0)
-		ft_putchar_fd('0', 1);
+	while (flags.precision-- > 0)
+		ft_stdout_char('0', flags.error);
 	if (n >= 10)
-		print_ll(n / 10, 0);
-	ft_putchar_fd(n % 10 + '0', 1);
+		print_ll(n / 10, flags);
+	ft_stdout_char(n % 10 + '0', flags.error);
 }
 
 int	print_signed(va_list *ap, t_flags flags)
@@ -83,18 +84,18 @@ int	print_signed(va_list *ap, t_flags flags)
 	n = get_arg(ap, flags.size);
 	len = update_flags(&flags, n);
 	if (flags.padding == '0')
-		put_sign(n, flags.positive_sign);
+		put_sign(n, flags);
 	if (!flags.left_adjust)
 		while (flags.width-- > 0)
-			ft_putchar_fd(flags.padding, 1);
+			ft_stdout_char(flags.padding, flags.error);
 	if (flags.padding != '0')
-		put_sign(n, flags.positive_sign);
+		put_sign(n, flags);
 	if (flags.precision != -1 && !n)
 		while (flags.precision-- > 0)
-			ft_putchar_fd('0', 1);
+			ft_stdout_char('0', flags.error);
 	else
-		print_ll(n, flags.precision);
+		print_ll(n, flags);
 	while (flags.width-- > 0)
-		ft_putchar_fd(' ', 1);
+		ft_stdout_char(' ', flags.error);
 	return (len);
 }

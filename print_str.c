@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:56:36 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 13:30:07 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/21 10:03:23 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	put_null(t_flags flags)
 	{
 		while (flags.width-- > 0)
 		{
-			ft_putchar_fd(' ', 1);
+			ft_stdout_char(' ', flags.error);
 			len++;
 		}
 	}
@@ -43,7 +43,7 @@ static int	put_null(t_flags flags)
 		write(1, "(null)", 6);
 	while (flags.width-- > 0)
 	{
-		ft_putchar_fd(' ', 1);
+		ft_stdout_char(' ', flags.error);
 		len++;
 	}
 	return (len);
@@ -60,9 +60,9 @@ int	print_str(va_list *ap, t_flags flags)
 	len = update_flags(&flags, s);
 	if (!flags.left_adjust)
 		while (flags.width-- > 0)
-			ft_putchar_fd(' ', 1);
+			ft_stdout_char(' ', flags.error);
 	write(1, s, flags.precision);
 	while (flags.width-- > 0)
-		ft_putchar_fd(' ', 1);
+		ft_stdout_char(' ', flags.error);
 	return (len);
 }

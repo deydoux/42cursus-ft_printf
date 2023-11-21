@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 10:55:40 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 14:10:16 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/21 09:57:45 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ int	put_nil(t_flags flags)
 	{
 		while (flags.width-- > 0)
 		{
-			ft_putchar_fd(' ', 1);
+			ft_stdout_char(' ', flags.error);
 			len++;
 		}
 	}
 	write(1, "(nil)", 5);
 	while (flags.width-- > 0)
 	{
-		ft_putchar_fd(' ', 1);
+		ft_stdout_char(' ', flags.error);
 		len++;
 	}
 	return (len);

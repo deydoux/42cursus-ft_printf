@@ -90,7 +90,7 @@ static size_t	parse_size(const char **format)
 	return (size);
 }
 
-t_flags	get_flags(const char **format, va_list *ap)
+t_flags	get_flags(const char **format, va_list *ap, int *error)
 {
 	t_flags	flags;
 
@@ -99,5 +99,6 @@ t_flags	get_flags(const char **format, va_list *ap)
 	flags.precision = parse_precision(format, ap);
 	flags.size = parse_size(format);
 	flags.ptr = 0;
+	flags.error = error;
 	return (flags);
 }

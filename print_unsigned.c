@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 20:11:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/20 14:07:47 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/21 10:06:56 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ static int	update_flags(t_flags *flags, unsigned long long n, size_t base_len,
 	return (len);
 }
 
-static void	print_ull(unsigned long long n, int precision, char *base,
+static void	print_ull(unsigned long long n, t_flags flags, char *base,
 	size_t base_len)
 {
-	while (precision-- > 0)
-		ft_putchar_fd('0', 1);
+	while (flags.precision-- > 0)
+		ft_stdout_char('0', flags.error);
 	if (n >= base_len)
-		print_ull(n / base_len, 0, base, base_len);
-	ft_putchar_fd(base[n % base_len], 1);
+		print_ull(n / base_len, flags, base, base_len);
+	ft_stdout_char(base[n % base_len], flags.error);
 }
 
 int	print_unsigned(va_list *ap, t_flags flags, char *base, char *prefix)
@@ -75,15 +75,15 @@ int	print_unsigned(va_list *ap, t_flags flags, char *base, char *prefix)
 	len = update_flags(&flags, n, base_len, prefix);
 	if (!flags.left_adjust)
 		while (flags.width-- > 0)
-			ft_putchar_fd(flags.padding, 1);
+			ft_stdout_char(flags.padding, flags.error);
 	if (flags.alternate_form && n)
-		ft_putstr_fd(prefix, 1);
+		ft_stdout(prefix, 2, flags.error);
 	if (flags.precision != -1 && !n)
 		while (flags.precision-- > 0)
-			ft_putchar_fd('0', 1);
+			ft_stdout_char('0', flags.error);
 	else
-		print_ull(n, flags.precision, base, base_len);
+		print_ull(n, flags, base, base_len);
 	while (flags.width-- > 0)
-		ft_putchar_fd(' ', 1);
+		ft_stdout_char(' ', flags.error);
 	return (len);
 }
