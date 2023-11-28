@@ -6,7 +6,7 @@
 /*   By: deydoux <deydoux@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 12:10:12 by deydoux           #+#    #+#             */
-/*   Updated: 2023/11/21 11:17:45 by deydoux          ###   ########.fr       */
+/*   Updated: 2023/11/28 18:01:30 by deydoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	ft_printf(const char *format, ...)
 	int		error;
 	va_list	ap;
 
+	if (!format)
+		return (-1);
 	len = 0;
 	error = 0;
 	va_start(ap, format);
@@ -76,7 +78,5 @@ int	ft_printf(const char *format, ...)
 		}
 	}
 	va_end(ap);
-	if (error)
-		return (-1);
-	return (len);
+	return (len * (!error) - (error != 0));
 }
